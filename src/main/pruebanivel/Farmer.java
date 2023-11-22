@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Farmer extends Npc{
     private String city;
-    private final int MAX_ITEMS = 5;
-    private final double TAX =  0.02;
-    private final double WEAR_TEAR =  0.15;
+    private static final int MAX_ITEMS = 5;
+    private static final double TAX =  0.02;
+    private static final double WEAR_TEAR =  0.15;
     private List<Item> inventory;
     private final int idNpc;
 

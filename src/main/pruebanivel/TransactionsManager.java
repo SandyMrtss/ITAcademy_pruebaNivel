@@ -10,8 +10,8 @@ public class TransactionsManager {
         vendors.add(new Farmer("Madrid"));
         vendors.add(new Merchant("Barcelona"));
         vendors.add(new Thief("Barcelona"));
-        System.out.println("Predetermined vendors created...");
-        System.out.println("Creating predetermined items");
+        System.out.println("Predetermined ...");
+        System.out.println("Creating predeterminevendors createdd items");
         try {
             vendors.get(0).buyItem(new Item("banana", "food", 1.7));
             vendors.get(0).buyItem(new Item("apple", "food", 1.2));
