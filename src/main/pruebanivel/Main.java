@@ -2,7 +2,7 @@ package pruebanivel;
 
 
 import static pruebanivel.TransactionsManager.*;
-import static pruebanivel.Readers.*;
+import static pruebanivel.GetInput.*;
 public class Main {
     static void showMenu(){
         System.out.println("What do you want to do?\n" +
@@ -16,13 +16,14 @@ public class Main {
                 "0.- Exit");
     }
     public static void main(String[] args) {
-
-        boolean isExit = false;
-
-        while(!isExit){
+        System.out.println("Welcome!");
+        loadData();
+        boolean isExit;
+        do{
             showMenu();
+            isExit = false;
             int option = readInt("Option: ");
-            switch (option){
+            switch (option) {
                 case 1:
                     System.out.println("Which vendor's inventory do you want to see?\n" +
                             "Please input their id");
@@ -35,12 +36,10 @@ public class Main {
                     String city = readString("City: ");
                     System.out.printf("Vendors in %s", city);
                     System.out.println();
-                    findVendorsCity(city)
-                            .forEach(System.out::println);
+                    printVendorsCity(city);
                     break;
                 case 3:
-                    String cityCheap = readString("City: ");
-                    printCheapestItemAllVendors(findVendorsCity(cityCheap));
+                    printCheapestItemAllVendors();
                     break;
                 case 4:
                     String type = readString("Item type: ");
@@ -48,12 +47,11 @@ public class Main {
                     break;
                 case 5:
                     System.out.println("Which item do you want to buy?");
-                    showItems();
+                    showAllItems();
                     String nameItem = readString("Item name: ");
-                    if(deleteItem(nameItem)){
+                    if (deleteItem(nameItem)) {
                         System.out.println("Item bought succesfully");
-                    }
-                    else {
+                    } else {
                         System.out.println("Item not found");
                     }
                     break;
@@ -64,8 +62,11 @@ public class Main {
                 default:
                     option = 0;
                     isExit = true;
-                    System.out.println("Goodbye!");
             }
         }
+        while(!isExit);
+        System.out.println("Goodbye!");
+
+
     }
 }

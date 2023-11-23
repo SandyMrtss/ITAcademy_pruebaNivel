@@ -3,12 +3,12 @@ package pruebanivel;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Readers {
+public class GetInput {
     static Scanner in = new Scanner(System.in);
 
     public static int readInt(String message){
         while (true){
-            System.out.println(message);
+            System.out.printf(message);
             int i;
             try {
                 i = in.nextInt();
@@ -24,7 +24,7 @@ public class Readers {
     }
     public static String readString(String message){
         while (true){
-            System.out.println(message);
+            System.out.printf(message);
             String s;
             try {
                 s = in.nextLine();

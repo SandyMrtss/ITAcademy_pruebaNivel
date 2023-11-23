@@ -1,38 +1,44 @@
 package pruebanivel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Merchant extends Npc{
-    private String city;
     private static final int MAX_ITEMS = 7;
     private static final double TAX =  0.04;
     private static final double WEAR_TEAR =  0.0;
-    private List<Item> inventory;
     private final int idNpc;
     public Merchant(String city) {
-        super();
-        this.city = city;
-        this.inventory = new ArrayList<>(MAX_ITEMS);
+        super(city);
         this.idNpc = Npc.idNpc;
     }
 
 
     @Override
-    public void buyItem(Item item) {
-
-    }
-    @Override
-    public String getCity() {
-        return city;
-    }
-    @Override
-    public void sellItem(Item item) {
-
-    }
-
-    @Override
     public String toString() {
-        return "Vendor type= merchant, id= " + idNpc + ", city= " + city;
+        return "Vendor Type= merchant, ID= " + idNpc + ", City= " + city;
+    }
+
+    @Override
+    public int getIdNpc() {
+        return idNpc;
+    }
+
+    @Override
+    public void addItem(Item item) throws FullInventoryException {
+        if(this.inventory.size() >= MAX_ITEMS){
+            throw new FullInventoryException();
+        }
+        item.setWearPercentage(WEAR_TEAR);
+        item.setPrice(item.getPrice()+ item.getPrice()*TAX);
+        this.inventory.add(item);
+    }
+
+    @Override
+    public void deleteItem(Item item) throws ItemNotFoundException {
+        if (this.inventory.remove(item)){
+            System.out.printf("Item %s deleted from NPC %s", item, this);
+            System.out.println();
+        }
+        else{
+            throw new ItemNotFoundException();
+        }
     }
 }

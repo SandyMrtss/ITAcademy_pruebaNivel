@@ -1,29 +1,44 @@
 package pruebanivel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Farmer extends Npc{
-    private String city;
     private static final int MAX_ITEMS = 5;
     private static final double TAX =  0.02;
     private static final double WEAR_TEAR =  0.15;
-    private List<Item> inventory;
     private final int idNpc;
 
     public Farmer(String city) {
-        super();
-        this.city = city;
-        this.inventory = new ArrayList<>(MAX_ITEMS);
+        super(city);
         this.idNpc = Npc.idNpc;
-    }
-    @Override
-    public String getCity() {
-        return city;
     }
 
     @Override
     public String toString() {
-        return "Vendor type= farmer, id= " + idNpc + ", city= " + city;
+        return "Vendor Type= farmer, ID= " + idNpc + ", City= " + city;
+    }
+
+    @Override
+    public int getIdNpc() {
+        return idNpc;
+    }
+
+    @Override
+    public void addItem(Item item) throws FullInventoryException {
+        if(inventory.size() >= MAX_ITEMS){
+            throw new FullInventoryException();
+        }
+        item.setWearPercentage(WEAR_TEAR);
+        item.setPrice(item.getPrice()+ item.getPrice()*TAX);
+        inventory.add(item);
+    }
+
+    @Override
+    public void deleteItem(Item item) throws ItemNotFoundException{
+        if (inventory.remove(item)){
+            System.out.printf("Item %s deleted from NPC %s", item, this);
+            System.out.println();
+        }
+        else{
+            throw new ItemNotFoundException();
+        }
     }
 }
