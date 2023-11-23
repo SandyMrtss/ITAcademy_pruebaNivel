@@ -5,10 +5,9 @@ import java.util.List;
 
 public class Merchant extends Npc{
     private String city;
-
-    private final int MAX_ITEMS = 7;
-    private final double TAX =  0.04;
-    private final double WEAR_TEAR =  0.0;
+    private static final int MAX_ITEMS = 7;
+    private static final double TAX =  0.04;
+    private static final double WEAR_TEAR =  0.0;
     private List<Item> inventory;
     private final int idNpc;
     public Merchant(String city) {

@@ -2,7 +2,7 @@ package pruebanivel;
 
 import java.util.List;
 
-public class Npc {
+public abstract class Npc {
     private String city;
     private List<Item> inventory;
     private int MAX_ITEMS;
@@ -19,7 +19,7 @@ public class Npc {
     }
 
 
-    public void buyItem(Item item) throws FullInventoryException {
+    public void buyItem(Item item) throws FullInventoryException { //abstract
         if(inventory.size() >= MAX_ITEMS){
             throw new FullInventoryException();
         }
@@ -28,7 +28,7 @@ public class Npc {
         inventory.add(item);
     }
 
-    public void sellItem(Item item){
+    public void sellItem(Item item){ //abstract
         inventory.remove(item);
     }
     public void showInventory(){
@@ -50,11 +50,10 @@ public class Npc {
         return cheapestItem;
     }
 
-    public String getCity() {
-        return null;
-    }
 
     public List<Item> getInventory() {
         return inventory;
     }
+
+    public abstract String getCity();
 }
