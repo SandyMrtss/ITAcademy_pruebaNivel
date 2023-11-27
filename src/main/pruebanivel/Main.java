@@ -5,6 +5,7 @@ import static pruebanivel.TransactionsManager.*;
 import static pruebanivel.GetInput.*;
 public class Main {
     static void showMenu(){
+        System.out.println("----------------------------------------");
         System.out.println("What do you want to do?\n" +
                 "1.- Check a vendor's inventory\n" +
                 "2.- Check which vendors are in a city\n" +
@@ -14,6 +15,7 @@ public class Main {
                 "6.- Sell an item to a vendor\n" +
                 "7.- Serialize vendors' information in JSON file\n" +
                 "0.- Exit");
+        System.out.println("----------------------------------------");
     }
     public static void main(String[] args) {
         System.out.println("Welcome!");
@@ -48,14 +50,12 @@ public class Main {
                 case 5:
                     System.out.println("Which item do you want to buy?");
                     showAllItems();
-                    String nameItem = readString("Item name: ");
-                    if (deleteItem(nameItem)) {
-                        System.out.println("Item bought succesfully");
-                    } else {
-                        System.out.println("Item not found");
-                    }
+                    int idItem = readInt("Item ID: ");
+                    buyItem(idItem);
                     break;
                 case 6:
+                    System.out.println("What item do you want to sell?");
+                    sellItem();
                     break;
                 case 7:
                     break;

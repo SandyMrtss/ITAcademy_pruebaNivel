@@ -2,6 +2,10 @@ package pruebanivel;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import org.javatuples.Pair;
+
+import static pruebanivel.GetInput.*;
 
 public class TransactionsManager {
     private static final String currDir = System.getProperty("user.dir");
@@ -63,15 +67,19 @@ public class TransactionsManager {
     }
     public static void loadData(){
         vendors = new ArrayList<>();
+        System.out.println("----------------------------------------");
         System.out.println("Loading predetermined data...");
         createVendors();
         createItems();
         System.out.println("Predetermined data loaded successfully");
+        System.out.println("----------------------------------------");
     }
-
     public static void showVendors(){
+        System.out.println("List of vendors");
+        System.out.println("----------------------------------------");
         vendors
                 .forEach(System.out::println);
+        System.out.println("----------------------------------------");
     }
     public static void showAllItems(){
         System.out.println("List of available items");
@@ -79,13 +87,17 @@ public class TransactionsManager {
         vendors
                 .forEach(v -> v.getInventory()
                         .forEach(System.out::println));
-
+        System.out.println("----------------------------------------");
     }
-    public static void showVendorInventory(int id){
+    private static Npc findVendor(int id){
         Npc vendor = vendors.stream()
                 .filter(v-> v.getIdNpc() == id)
                 .findAny()
                 .orElse(null);
+        return vendor;
+    }
+    public static void showVendorInventory(int id){
+        Npc vendor = findVendor(id);
         if (vendor == null){
             System.out.printf("No NPC found with ID %d", id);
             System.out.println();
@@ -122,20 +134,61 @@ public class TransactionsManager {
                 });
         System.out.println(itemsType);
     }
-    public static boolean deleteItem(String name){
-        for(Npc vendor: vendors) {
-            for(Item item : vendor.getInventory()){
-                if(item.getName().equalsIgnoreCase(name)){
-                    try {
-                        vendor.deleteItem(item);
-                    } catch (ItemNotFoundException er) {
-                        System.out.printf("%s",er.getMessage());
-                        System.out.println();
-                    }
-                    return true;
-                }
+    private static Map<Npc,Item> findItem(int idItem){
+        Map<Npc, Item> npcItemMap = new HashMap<>();
+        vendors.stream()
+                .filter(v-> {
+                    v.getInventory().stream()
+                            .filter(i-> i.getIdItem() == idItem)
+                            .forEach(i-> npcItemMap.put(v, i));
+                });
+        return item;
+    }
+
+    public static void buyItem(int idItem){
+        AtomicBoolean itemDeleted = new AtomicBoolean(false);
+         vendors
+                .forEach(v-> {
+                    v.getInventory().stream()
+                            .filter(i -> i.getIdItem() == idItem)
+                            .findAny()
+                            .ifPresent(i-> {
+                                itemDeleted.set(true);
+                                v.deleteItem(i);
+                                System.out.printf("Item %d bought successfully from vendor %d", i.getIdItem(), v.getIdNpc());
+                                System.out.println();
+                            });
+
+                });
+        if(!itemDeleted.get()){
+            System.out.printf("Item %d not found", idItem);
+            System.out.println();
+        }
+    }
+    private static Item createUserItem(){
+        String name = readString("What's the item's name?");
+        String type = readString("What's the item's type?");
+        double price = readDouble("What's the item's price?");
+        return new Item(name, type, price);
+    }
+    public static void sellItem(){
+        Item item = createUserItem();
+        System.out.println("Which vendor do you want to sell it to?");
+        showVendors();
+        int vendorId = readInt("Id: ");
+        Npc vendor = findVendor(vendorId);
+        if (vendor == null){
+            System.out.printf("No NPC found with ID %d", vendorId);
+            System.out.println();
+        }
+        else {
+            try {
+                vendor.addItem(item);
+            } catch (FullInventoryException ex) {
+                ex.getMessage();
             }
         }
-        return false;
     }
+
 }
+

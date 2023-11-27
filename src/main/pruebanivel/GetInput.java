@@ -22,6 +22,22 @@ public class GetInput {
         }
 
     }
+    public static double readDouble(String message){
+        while (true){
+            System.out.printf(message);
+            double i;
+            try {
+                i = in.nextDouble();
+                in.nextLine();
+                return i;
+            }
+            catch(InputMismatchException ex) {
+                System.out.println("Format error, please input an integer");
+                in.nextLine();
+            }
+        }
+
+    }
     public static String readString(String message){
         while (true){
             System.out.printf(message);
