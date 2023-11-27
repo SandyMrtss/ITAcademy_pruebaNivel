@@ -1,6 +1,5 @@
 package pruebanivel;
 
-
 import static pruebanivel.TransactionsManager.*;
 import static pruebanivel.GetInput.*;
 public class Main {
@@ -48,8 +47,8 @@ public class Main {
                 case 5:
                     System.out.println("Which item do you want to buy?");
                     showAllItems();
-                    String nameItem = readString("Item name: ");
-                    if (deleteItem(nameItem)) {
+                    int idItem = readInt("Item ID: ");
+                    if (deleteItem(idItem)) {
                         System.out.println("Item bought succesfully");
                     } else {
                         System.out.println("Item not found");

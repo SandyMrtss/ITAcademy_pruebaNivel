@@ -122,7 +122,19 @@ public class TransactionsManager {
                 });
         System.out.println(itemsType);
     }
-    public static boolean deleteItem(String name){
+    public static boolean deleteItem(int idItem) throws ItemNotFoundException{
+        List<Item> inventory = vendors
+                .forEach(v-> v.getInventory());
+                        .stream()
+                        .filter(i -> i.getIdItem() == idItem)
+                        .findAny()
+                        .orElse(null));
+        vendors
+                .forEach(v-> {
+                    v.getInventory().stream()
+                            .filter(i -> i.getType().equalsIgnoreCase(type))
+                            .forEachOrdered(itemsType::add);
+                });
         for(Npc vendor: vendors) {
             for(Item item : vendor.getInventory()){
                 if(item.getName().equalsIgnoreCase(name)){
