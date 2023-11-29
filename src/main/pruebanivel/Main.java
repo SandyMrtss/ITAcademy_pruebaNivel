@@ -51,7 +51,7 @@ public class Main {
                     System.out.println("Which item do you want to buy?");
                     showAllItems();
                     int idItem = readInt("Item ID: ");
-                    buyItem(idItem);
+                    deleteItem(idItem);
                     break;
                 case 6:
                     System.out.println("What item do you want to sell?");

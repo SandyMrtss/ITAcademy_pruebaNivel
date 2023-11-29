@@ -134,60 +134,17 @@ public class TransactionsManager {
                 });
         System.out.println(itemsType);
     }
-    private static Map<Npc,Item> findItem(int idItem){
-        Map<Npc, Item> npcItemMap = new HashMap<>();
-        vendors.stream()
-                .filter(v-> {
-                    v.getInventory().stream()
-                            .filter(i-> i.getIdItem() == idItem)
-                            .forEach(i-> npcItemMap.put(v, i));
-                });
-        return item;
-    }
-
-    public static void buyItem(int idItem){
-        AtomicBoolean itemDeleted = new AtomicBoolean(false);
-         vendors
-                .forEach(v-> {
-                    v.getInventory().stream()
-                            .filter(i -> i.getIdItem() == idItem)
-                            .findAny()
-                            .ifPresent(i-> {
-                                itemDeleted.set(true);
-                                v.deleteItem(i);
-                                System.out.printf("Item %d bought successfully from vendor %d", i.getIdItem(), v.getIdNpc());
-                                System.out.println();
-                            });
-
-                });
-        if(!itemDeleted.get()){
-            System.out.printf("Item %d not found", idItem);
-            System.out.println();
-        }
-    }
-    private static Item createUserItem(){
-        String name = readString("What's the item's name?");
-        String type = readString("What's the item's type?");
-        double price = readDouble("What's the item's price?");
-        return new Item(name, type, price);
-    }
-    public static void sellItem(){
-        Item item = createUserItem();
-        System.out.println("Which vendor do you want to sell it to?");
-        showVendors();
-        int vendorId = readInt("Id: ");
-        Npc vendor = findVendor(vendorId);
-        if (vendor == null){
-            System.out.printf("No NPC found with ID %d", vendorId);
-            System.out.println();
-        }
-        else {
-            try {
-                vendor.addItem(item);
-            } catch (FullInventoryException ex) {
-                ex.getMessage();
-            }
-        }
+    public static void deleteItem(int idItem){
+        vendors
+                .forEach(v-> v.getInventory()
+                        .stream()
+                        .filter(i -> i.getIdItem() == idItem)
+                        .findAny()
+                        .ifPresentOrElse(
+                                v::deleteItem,
+                                ()-> System.out.println("Item not found")
+                        )
+                );
     }
 
 }

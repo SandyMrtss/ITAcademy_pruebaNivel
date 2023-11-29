@@ -32,7 +32,9 @@ public class Farmer extends Npc{
     }
 
     @Override
-    public void deleteItem(Item item){
+    public void deleteItem(Item item) {
         inventory.remove(item);
+        System.out.printf("Item %s deleted from farmer %d", item, this.idNpc);
+        System.out.println();
     }
 }

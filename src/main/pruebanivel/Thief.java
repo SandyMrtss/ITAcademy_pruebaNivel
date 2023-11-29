@@ -32,7 +32,9 @@ public class Thief extends Npc{
     }
 
     @Override
-    public void deleteItem(Item item) {
-        inventory.remove(item);
+    public void deleteItem(Item item){
+        this.inventory.remove(item);
+        System.out.printf("Item %s deleted from NPC %s", item, this);
+        System.out.println();
     }
 }

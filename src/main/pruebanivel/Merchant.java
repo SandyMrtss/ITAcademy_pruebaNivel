@@ -32,7 +32,9 @@ public class Merchant extends Npc{
     }
 
     @Override
-    public void deleteItem(Item item){
-        inventory.remove(item);
+    public void deleteItem(Item item) {
+        this.inventory.remove(item);
+        System.out.printf("Item %s deleted from merchant %d", item, this.idNpc);
+        System.out.println();
     }
 }
