@@ -48,13 +48,10 @@ public class Main {
                     System.out.println("Which item do you want to buy?");
                     showAllItems();
                     int idItem = readInt("Item ID: ");
-                    if (deleteItem(idItem)) {
-                        System.out.println("Item bought succesfully");
-                    } else {
-                        System.out.println("Item not found");
-                    }
+                    deleteItem(idItem);
                     break;
                 case 6:
+                    System.out.println("What item do you want to buy?");
                     break;
                 case 7:
                     break;

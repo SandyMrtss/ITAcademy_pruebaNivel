@@ -32,13 +32,10 @@ public class Farmer extends Npc{
     }
 
     @Override
-    public void deleteItem(Item item) throws ItemNotFoundException{
-        if (inventory.remove(item)){
-            System.out.printf("Item %s deleted from NPC %s", item, this);
-            System.out.println();
-        }
-        else{
-            throw new ItemNotFoundException();
-        }
+    public void deleteItem(Item item){
+        inventory.remove(item);
+        System.out.printf("Item %s deleted from farmer %d", item, this.idNpc);
+        System.out.println();
+
     }
 }

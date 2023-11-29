@@ -30,7 +30,7 @@ public abstract class Npc {
         return cheapestItem;
     }
     public abstract void addItem(Item item) throws FullInventoryException;
-    public abstract void deleteItem(Item item) throws ItemNotFoundException;
+    public abstract void deleteItem(Item item);
 
     public List<Item> getInventory() {
         return inventory;

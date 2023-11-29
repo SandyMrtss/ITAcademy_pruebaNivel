@@ -122,32 +122,16 @@ public class TransactionsManager {
                 });
         System.out.println(itemsType);
     }
-    public static boolean deleteItem(int idItem) throws ItemNotFoundException{
-        List<Item> inventory = vendors
-                .forEach(v-> v.getInventory());
+    public static void deleteItem(int idItem){
+        vendors
+                .forEach(v-> v.getInventory()
                         .stream()
                         .filter(i -> i.getIdItem() == idItem)
                         .findAny()
-                        .orElse(null));
-        vendors
-                .forEach(v-> {
-                    v.getInventory().stream()
-                            .filter(i -> i.getType().equalsIgnoreCase(type))
-                            .forEachOrdered(itemsType::add);
-                });
-        for(Npc vendor: vendors) {
-            for(Item item : vendor.getInventory()){
-                if(item.getName().equalsIgnoreCase(name)){
-                    try {
-                        vendor.deleteItem(item);
-                    } catch (ItemNotFoundException er) {
-                        System.out.printf("%s",er.getMessage());
-                        System.out.println();
-                    }
-                    return true;
-                }
-            }
-        }
-        return false;
+                        .ifPresentOrElse(
+                                v::deleteItem,
+                                ()-> System.out.println("Item not found")
+                        )
+                );
     }
 }
