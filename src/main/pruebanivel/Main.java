@@ -2,17 +2,18 @@ package pruebanivel;
 
 
 public class Main {
-    static void showMenu(){
+    private static void showMenu(){
         System.out.println("----------------------------------------");
-        System.out.println("What do you want to do?\n" +
-                "1.- Check a vendor's inventory\n" +
-                "2.- Check which vendors are in a city\n" +
-                "3.- Show the cheapest item for all vendors\n" +
-                "4.- Show all items from a type in price's ascending order\n" +
-                "5.- Buy an item from a vendor\n" +
-                "6.- Sell an item to a vendor\n" +
-                "7.- Serialize vendors' information in JSON file\n" +
-                "0.- Exit");
+        System.out.println("""
+                What do you want to do?
+                1.- Check a vendor's inventory
+                2.- Check which vendors are in a city
+                3.- Show the cheapest item for all vendors
+                4.- Show all items from a type in price's ascending order
+                5.- Buy an item from a vendor
+                6.- Sell an item to a vendor
+                7.- Serialize vendors' information in JSON file
+                0.- Exit""");
         System.out.println("----------------------------------------");
     }
     public static void main(String[] args) {
@@ -46,13 +47,10 @@ public class Main {
                     TransactionsManager.serializeData();
                     break;
                 default:
-                    option = 0;
                     isExit = true;
             }
         }
         while(!isExit);
         System.out.println("Goodbye!");
-
-
     }
 }

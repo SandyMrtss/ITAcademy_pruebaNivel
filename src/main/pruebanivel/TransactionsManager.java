@@ -5,8 +5,8 @@ import java.util.*;
 
 public class TransactionsManager {
     private static final String currDir = System.getProperty("user.dir");
-    private static final String vendorPath = currDir + "/src/main/pruebanivel/vendors.csv";
-    private static final String itemPath = currDir + "/src/main/pruebanivel/items.csv";
+    private static final String vendorPath = currDir + "/src/main/resources/vendors.csv";
+    private static final String itemPath = currDir + "/src/main/resources/items.csv";
 
     private static List<Npc> vendors;
     private static void createVendors(){
@@ -164,10 +164,10 @@ public class TransactionsManager {
         System.out.println("What item do you want to sell?");
         Item item = createUserItem();
         Npc vendor = getVendor("Which vendor do you want to sell it to?");
-               try {
+        try {
             vendor.addItem(item);
         } catch (FullInventoryException ex) {
-            ex.getMessage();
+            System.out.println(ex.getMessage());
         }
     }
     public static void serializeData(){
@@ -177,7 +177,6 @@ public class TransactionsManager {
             throw new RuntimeException(e);
         }
     }
-
 
 }
 

@@ -1,12 +1,8 @@
 package pruebanivel;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.*;
 
-public abstract class Npc implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
+public abstract class Npc{
     protected String city;
     protected List<Item> inventory;
     protected static int idNpc = 0;
@@ -25,9 +21,8 @@ public abstract class Npc implements Serializable {
         if (inventory.isEmpty()){
             System.out.println("No items in this NPC");
         }
-        for(Item item : inventory){
-            System.out.println(item);
-        }
+        inventory
+                .forEach(System.out::println);
     }
     public Item cheapestItem(){
         Item cheapestItem = inventory.stream().min(Item::compareTo).get();

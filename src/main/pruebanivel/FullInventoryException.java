@@ -5,6 +5,6 @@ public class FullInventoryException extends Exception{
         super();
     }
     public String getMessage(){
-        return "Full inventory! Vendor cannot buy item";
+        return "Oh no! This vendor has a full inventory and cannot buy item :(";
     }
 }

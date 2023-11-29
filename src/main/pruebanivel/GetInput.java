@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class GetInput {
-    static Scanner in = new Scanner(System.in);
+    private static Scanner in = new Scanner(System.in);
 
     public static int readInt(String message){
         while (true){
@@ -20,7 +20,6 @@ public class GetInput {
                 in.nextLine();
             }
         }
-
     }
     public static double readDouble(String message){
         while (true){
@@ -36,7 +35,6 @@ public class GetInput {
                 in.nextLine();
             }
         }
-
     }
     public static String readString(String message){
         while (true){
@@ -44,20 +42,15 @@ public class GetInput {
             String s;
             try {
                 s = in.nextLine();
-                boolean allDigits = true;
-                for(int i = 0; i < s.length(); ++i) {
-                    char c = s.charAt(i);
-                    if(Character.isAlphabetic(c)){
-                        allDigits = false;
-                    }
-                }
-                if(allDigits){
+                if(s.chars().anyMatch(Character::isDigit)){
                     throw new Exception();
                 }
-                return s;
+                else {
+                    return s;
+                }
             }
             catch(Exception ex) {
-                System.out.println("Format error, please input only alphabetic characters");
+                System.out.println("Format error, please input only letters");
             }
         }
     }
