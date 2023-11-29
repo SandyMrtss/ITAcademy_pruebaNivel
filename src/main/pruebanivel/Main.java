@@ -1,8 +1,6 @@
 package pruebanivel;
 
 
-import static pruebanivel.TransactionsManager.*;
-import static pruebanivel.GetInput.*;
 public class Main {
     static void showMenu(){
         System.out.println("----------------------------------------");
@@ -19,45 +17,33 @@ public class Main {
     }
     public static void main(String[] args) {
         System.out.println("Welcome!");
-        loadData();
+        TransactionsManager.loadData();
         boolean isExit;
         do{
             showMenu();
             isExit = false;
-            int option = readInt("Option: ");
+            int option = GetInput.readInt("Option: ");
             switch (option) {
                 case 1:
-                    System.out.println("Which vendor's inventory do you want to see?\n" +
-                            "Please input their id");
-                    showVendors();
-                    int vendorId = readInt("Id: ");
-                    showVendorInventory(vendorId);
+                    TransactionsManager.showVendorInventory();
                     break;
                 case 2:
-                    System.out.println("Which city's vendors do you want to see?");
-                    String city = readString("City: ");
-                    System.out.printf("Vendors in %s", city);
-                    System.out.println();
-                    printVendorsCity(city);
+                    TransactionsManager.printVendorsCity();
                     break;
                 case 3:
-                    printCheapestItemAllVendors();
+                    TransactionsManager.printCheapestItemAllVendors();
                     break;
                 case 4:
-                    String type = readString("Item type: ");
-                    printItemsType(type);
+                    TransactionsManager.printItemsType();
                     break;
                 case 5:
-                    System.out.println("Which item do you want to buy?");
-                    showAllItems();
-                    int idItem = readInt("Item ID: ");
-                    deleteItem(idItem);
+                    TransactionsManager.buyItem();
                     break;
                 case 6:
-                    System.out.println("What item do you want to sell?");
-                    sellItem();
+                    TransactionsManager.sellItem();
                     break;
                 case 7:
+                    TransactionsManager.serializeData();
                     break;
                 default:
                     option = 0;

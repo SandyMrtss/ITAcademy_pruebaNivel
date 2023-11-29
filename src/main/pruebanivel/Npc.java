@@ -1,8 +1,12 @@
 package pruebanivel;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.*;
 
-public abstract class Npc {
+public abstract class Npc implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     protected String city;
     protected List<Item> inventory;
     protected static int idNpc = 0;

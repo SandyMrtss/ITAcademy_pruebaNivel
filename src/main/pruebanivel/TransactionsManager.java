@@ -2,10 +2,6 @@ package pruebanivel;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
-import org.javatuples.Pair;
-
-import static pruebanivel.GetInput.*;
 
 public class TransactionsManager {
     private static final String currDir = System.getProperty("user.dir");
@@ -74,14 +70,14 @@ public class TransactionsManager {
         System.out.println("Predetermined data loaded successfully");
         System.out.println("----------------------------------------");
     }
-    public static void showVendors(){
+    private static void showVendors(){
         System.out.println("List of vendors");
         System.out.println("----------------------------------------");
         vendors
                 .forEach(System.out::println);
         System.out.println("----------------------------------------");
     }
-    public static void showAllItems(){
+    private static void showAllItems(){
         System.out.println("List of available items");
         System.out.println("----------------------------------------");
         vendors
@@ -96,11 +92,16 @@ public class TransactionsManager {
                 .orElse(null);
         return vendor;
     }
-    public static void showVendorInventory(int id){
-        Npc vendor = findVendor(id);
+    private static Npc getVendor(String message){
+        System.out.println(message);
+        showVendors();
+        int id = GetInput.readInt("Vendor ID: ");
+        return findVendor(id);
+    }
+    public static void showVendorInventory(){
+        Npc vendor = getVendor("Which vendor's inventory do you want to see?");
         if (vendor == null){
-            System.out.printf("No NPC found with ID %d", id);
-            System.out.println();
+            System.out.println("NPC not found");
         }
         else {
             vendor.showInventory();
@@ -113,8 +114,12 @@ public class TransactionsManager {
                 .forEach(cityVendors::add);
         return cityVendors;
     }
-    public static void printVendorsCity(String city){
+    public static void printVendorsCity(){
+        String city = GetInput.readString("Which city's vendors do you want to see?");
         List<Npc> cityVendors = findVendorsCity(city);
+        System.out.printf("List of vendors in %s", city);
+        System.out.println();
+        System.out.println("----------------------------------------");
         cityVendors.forEach(System.out::println);
     }
     public static void printCheapestItemAllVendors(){
@@ -124,7 +129,8 @@ public class TransactionsManager {
                     System.out.println(v.cheapestItem());
                         });
     }
-    public static void printItemsType(String type){
+    public static void printItemsType(){
+        String type = GetInput.readString("Item type: ");
         ArrayList<Item> itemsType = new ArrayList<>();
         vendors
                 .forEach(v-> {
@@ -134,7 +140,9 @@ public class TransactionsManager {
                 });
         System.out.println(itemsType);
     }
-    public static void deleteItem(int idItem){
+    public static void buyItem(){
+        showAllItems();
+        int idItem = GetInput.readInt("Item ID: ");
         vendors
                 .forEach(v-> v.getInventory()
                         .stream()
@@ -146,6 +154,30 @@ public class TransactionsManager {
                         )
                 );
     }
+    private static Item createUserItem(){
+        String name = GetInput.readString("What's the item's name?");
+        String type = GetInput.readString("What's the item's type?");
+        double price = GetInput.readDouble("What's the item's price?");
+        return new Item(name, type, price);
+    }
+    public static void sellItem(){
+        System.out.println("What item do you want to sell?");
+        Item item = createUserItem();
+        Npc vendor = getVendor("Which vendor do you want to sell it to?");
+               try {
+            vendor.addItem(item);
+        } catch (FullInventoryException ex) {
+            ex.getMessage();
+        }
+    }
+    public static void serializeData(){
+        try {
+            MySeriazilator.serialize(vendors, currDir + "/data.json");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
 

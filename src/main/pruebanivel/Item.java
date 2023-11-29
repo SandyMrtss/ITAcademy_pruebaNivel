@@ -1,6 +1,11 @@
 package pruebanivel;
 
-public class Item implements Comparable<Item>{
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Item implements Comparable<Item>, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final String name;
     private final String type;
     private double price;
